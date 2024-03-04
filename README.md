@@ -1,3 +1,3 @@
-# bluetooth_alien_motion_tracker
+# Bluetooth Aliens Motion Tracker
 
-A new Flutter project.
+A flutter project to simulate Aliens(movie from 1986) motion tracker
