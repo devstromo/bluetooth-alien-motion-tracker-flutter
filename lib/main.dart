@@ -1,8 +1,19 @@
 import 'package:bluetooth_alien_motion_tracker/presentation/screens/motion-tracker/motion_tracker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MainApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ],
+  ).then(
+    (value) => runApp(
+      const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
