@@ -6,7 +6,21 @@ class MotionTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('Motion Tracker'),
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          Center(
+            child: Text(
+              'Motion Tracker',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
