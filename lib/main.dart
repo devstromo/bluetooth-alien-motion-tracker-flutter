@@ -1,3 +1,4 @@
+import 'package:bluetooth_alien_motion_tracker/presentation/screens/motion-tracker/motion_tracker.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,9 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+        body: MotionTracker(),
       ),
     );
   }

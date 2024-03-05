@@ -5,6 +5,8 @@ class MotionTracker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Text('Motion Tracker'),
+    );
   }
 }
