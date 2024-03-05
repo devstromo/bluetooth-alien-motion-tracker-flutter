@@ -1,3 +1,4 @@
+import 'package:bluetooth_alien_motion_tracker/config/config.dart';
 import 'package:flutter/material.dart';
 
 class DistanceDataContainer extends StatelessWidget {
@@ -7,7 +8,7 @@ class DistanceDataContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: kToolbarHeight,
-      color: Colors.red,
+      color: kDistanceContainerColor,
     );
   }
 }
