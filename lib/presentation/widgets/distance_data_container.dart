@@ -39,13 +39,46 @@ class DistanceDataContainer extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(            
+          Positioned(
             child: Center(
               child: Container(
                 decoration: const BoxDecoration(
-                  color: Colors.red,
+                  color: Colors.transparent,
                 ),
-                child: const Text('00'),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '00',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        color: kDistanceNumbersColor,
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '00',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w100,
+                            fontSize: 12,
+                            color: kDistanceNumbersColor,
+                          ),
+                        ),
+                        Text(
+                          'm',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w100,
+                            fontSize: 12,
+                            color: kDistanceNumbersColor,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
