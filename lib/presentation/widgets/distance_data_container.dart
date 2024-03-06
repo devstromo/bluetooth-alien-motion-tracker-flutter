@@ -39,13 +39,14 @@ class DistanceDataContainer extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 10,
-            left: 100,
-            right: 0,
-            child: Container(
-              color: Colors.transparent,
-              child: const Text('Motion Tracker'),
+          Positioned(            
+            child: Center(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                ),
+                child: const Text('00'),
+              ),
             ),
           ),
         ],
