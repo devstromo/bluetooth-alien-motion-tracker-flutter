@@ -10,10 +10,16 @@ class DistanceDataContainer extends StatelessWidget {
     return Container(
       height: kToolbarHeight,
       color: kDistanceContainerColor,
-      child: const Stack(
+      child: Stack(
         children: [
-          Center(
-            child: Text('Motion Tracker'),
+          Positioned(
+            top: 10,
+            left: 0,
+            right: 0,
+            child: Container(
+              color: Colors.red,
+              child: Text('Motion Tracker'),
+            ),
           )
         ],
       ),
