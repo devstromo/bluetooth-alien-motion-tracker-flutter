@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -10,8 +12,55 @@ class MotionTracker extends StatefulWidget {
 }
 
 class _MotionTrackerState extends State<MotionTracker> {
+  static const Duration _ignoreDuration = Duration(milliseconds: 20);
   GyroscopeEvent? _gyroscopeEvent;
   int? _gyroscopeLastInterval;
+  DateTime? _gyroscopeUpdateTime;
+  final _streamSubscriptions = <StreamSubscription<dynamic>>[];
+  Duration sensorInterval = SensorInterval.normalInterval;
+
+  @override
+  void initState() {
+    super.initState();
+    _streamSubscriptions.add(
+      gyroscopeEventStream(samplingPeriod: sensorInterval).listen(
+        (GyroscopeEvent event) {
+          final now = DateTime.now();
+          setState(() {
+            _gyroscopeEvent = event;
+            if (_gyroscopeUpdateTime != null) {
+              final interval = now.difference(_gyroscopeUpdateTime!);
+              if (interval > _ignoreDuration) {
+                _gyroscopeLastInterval = interval.inMilliseconds;
+              }
+            }
+          });
+          _gyroscopeUpdateTime = now;
+        },
+        onError: (e) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return const AlertDialog(
+                  title: Text("Sensor Not Found"),
+                  content: Text(
+                      "It seems that your device doesn't support Gyroscope Sensor"),
+                );
+              });
+        },
+        cancelOnError: true,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (final subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +90,7 @@ class _MotionTrackerState extends State<MotionTracker> {
                   ),
                 ),
                 Text(
-                  _gyroscopeEvent?.x.toStringAsFixed(1) ?? 'x?',
+                  'x: ${_gyroscopeEvent?.x.toStringAsFixed(5) ?? '?'}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
@@ -49,7 +98,7 @@ class _MotionTrackerState extends State<MotionTracker> {
                   ),
                 ),
                 Text(
-                  _gyroscopeEvent?.y.toStringAsFixed(1) ?? 'y?',
+                  'y: ${_gyroscopeEvent?.y.toStringAsFixed(1) ?? '?'}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
@@ -57,7 +106,7 @@ class _MotionTrackerState extends State<MotionTracker> {
                   ),
                 ),
                 Text(
-                  _gyroscopeEvent?.z.toStringAsFixed(1) ?? 'z?',
+                  'z: ${_gyroscopeEvent?.z.toStringAsFixed(1) ?? '?'}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
