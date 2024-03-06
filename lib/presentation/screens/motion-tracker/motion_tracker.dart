@@ -1,4 +1,4 @@
-import 'package:bluetooth_alien_motion_tracker/presentation/widgets/distance_data_container.dart';
+import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class MotionTracker extends StatelessWidget {
@@ -24,7 +24,9 @@ class MotionTracker extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: DistanceDataContainer(),
+            child: DistanceDataContainer(
+              numbers: DistanceNumbers(),
+            ),
           )
         ],
       ),

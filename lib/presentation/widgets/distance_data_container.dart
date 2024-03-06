@@ -1,8 +1,14 @@
 import 'package:bluetooth_alien_motion_tracker/config/config.dart';
+import 'package:bluetooth_alien_motion_tracker/presentation/widgets/distance_numbers.dart';
 import 'package:flutter/material.dart';
 
 class DistanceDataContainer extends StatelessWidget {
-  const DistanceDataContainer({super.key});
+  const DistanceDataContainer({
+    super.key,
+    required this.numbers,
+  });
+
+  final Widget numbers;
 
   @override
   Widget build(BuildContext context) {
@@ -59,34 +65,7 @@ class DistanceDataContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '00',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32,
-                        color: kDistanceNumbersColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 8.0,
-                      ),
-                      child: Text(
-                        '00\nm',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: kDistanceNumbersColor,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                child: numbers,
               ),
             ),
           ),
