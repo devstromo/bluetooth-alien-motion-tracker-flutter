@@ -13,8 +13,11 @@ class DistanceDataContainer extends StatelessWidget {
       child: Stack(
         children: [
           const Positioned(
+            left: 60,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(
+                top: 10,
+              ),
               child: Text(
                 'F.E.M.S. 5.327.25',
                 style: TextStyle(
@@ -26,9 +29,11 @@ class DistanceDataContainer extends StatelessWidget {
             ),
           ),
           const Positioned(
-            right: 0,
+            right: 60,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(
+                top: 10,
+              ),
               child: Text(
                 'C.X. 56/36.53',
                 style: TextStyle(
