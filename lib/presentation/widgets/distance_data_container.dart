@@ -6,9 +6,17 @@ class DistanceDataContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       height: kToolbarHeight,
       color: kDistanceContainerColor,
+      child: const Stack(
+        children: [
+          Center(
+            child: Text('Motion Tracker'),
+          )
+        ],
+      ),
     );
   }
 }
