@@ -65,27 +65,21 @@ class DistanceDataContainer extends StatelessWidget {
                         color: kDistanceNumbersColor,
                       ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '00',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w100,
-                            fontSize: 12,
-                            color: kDistanceNumbersColor,
-                          ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 8.0,
+                      ),
+                      child: Text(
+                        '00\nm',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: kDistanceNumbersColor,
+                          height: 1,
                         ),
-                        Text(
-                          'm',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w100,
-                            fontSize: 12,
-                            color: kDistanceNumbersColor,
-                          ),
-                        ),
-                      ],
-                    )
+                      ),
+                    ),
                   ],
                 ),
               ),
