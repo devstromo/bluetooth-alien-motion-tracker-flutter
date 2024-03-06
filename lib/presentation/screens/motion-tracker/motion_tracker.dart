@@ -1,9 +1,14 @@
 import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class MotionTracker extends StatelessWidget {
+class MotionTracker extends StatefulWidget {
   const MotionTracker({super.key});
 
+  @override
+  State<MotionTracker> createState() => _MotionTrackerState();
+}
+
+class _MotionTrackerState extends State<MotionTracker> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
