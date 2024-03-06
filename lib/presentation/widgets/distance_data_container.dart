@@ -42,8 +42,9 @@ class DistanceDataContainer extends StatelessWidget {
           Positioned(
             child: Center(
               child: Container(
+                width: 150,
                 decoration: const BoxDecoration(
-                  color: Colors.transparent,
+                  color: Colors.black,
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
