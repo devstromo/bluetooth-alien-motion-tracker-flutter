@@ -25,6 +25,20 @@ class DistanceDataContainer extends StatelessWidget {
               ),
             ),
           ),
+          const Positioned(
+            right: 0,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'C.X. 56/36.53',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          ),
           Positioned(
             top: 10,
             left: 100,
