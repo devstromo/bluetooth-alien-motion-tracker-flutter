@@ -90,7 +90,7 @@ class _MotionTrackerState extends State<MotionTracker> {
                   ),
                 ),
                 Text(
-                  'x: ${_gyroscopeEvent?.x.toStringAsFixed(5) ?? '?'}',
+                  'x: ${_gyroscopeEvent?.x.toStringAsFixed(6) ?? '?'}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
