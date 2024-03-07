@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   DateTime? _gyroscopeUpdateTime;
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   Duration sensorInterval = SensorInterval.normalInterval;
+  double _currentRotation = 0.0;
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _MotionTrackerState extends State<MotionTracker> {
             }
           });
           _gyroscopeUpdateTime = now;
+          _updateRotation(event);
         },
         onError: (e) {
           showDialog(
@@ -58,6 +61,19 @@ class _MotionTrackerState extends State<MotionTracker> {
     super.dispose();
     for (final subscription in _streamSubscriptions) {
       subscription.cancel();
+    }
+  }
+
+  // Add this to your existing Gyroscope event listener
+  _updateRotation(GyroscopeEvent event) {
+    if (event.x.abs() > 0.001) {
+      // Update the rotation angle based on the x value of the gyroscope.
+      // You might want to scale the x value or use a different function to calculate the rotation angle
+      // depending on how sensitive you want the rotation to be to the gyroscope's readings.
+      setState(() {
+        _currentRotation += event
+            .x; // This is a simple example, you'll likely want to scale and/or limit this value
+      });
     }
   }
 
@@ -127,8 +143,11 @@ class _MotionTrackerState extends State<MotionTracker> {
           Positioned(
             left: 0,
             right: 0,
-            child: Image.asset(
-              'assets/imgs/inner-circle.png',              
+            child: Transform.rotate(
+              angle: _currentRotation, // Use your current rotation here
+              child: Image.asset(
+                'assets/imgs/inner-circle.png',
+              ),
             ),
           ),
           const Positioned(
