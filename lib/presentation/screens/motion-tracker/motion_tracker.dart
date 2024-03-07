@@ -20,10 +20,13 @@ class _MotionTrackerState extends State<MotionTracker> {
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   Duration sensorInterval = SensorInterval.normalInterval;
   double _currentRotation = 0.0;
+  late final ImageProvider _imageProvider;
 
   @override
   void initState() {
     super.initState();
+    _imageProvider = const AssetImage('assets/imgs/inner-circle.png');
+
     _streamSubscriptions.add(
       gyroscopeEventStream(samplingPeriod: sensorInterval).listen(
         (GyroscopeEvent event) {
@@ -54,6 +57,9 @@ class _MotionTrackerState extends State<MotionTracker> {
         cancelOnError: true,
       ),
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      precacheImage(_imageProvider, context);
+    });
   }
 
   @override
@@ -145,9 +151,7 @@ class _MotionTrackerState extends State<MotionTracker> {
             right: 0,
             child: Transform.rotate(
               angle: _currentRotation, // Use your current rotation here
-              child: Image.asset(
-                'assets/imgs/inner-circle.png',
-              ),
+              child: Image(image: _imageProvider),
             ),
           ),
           const Positioned(
