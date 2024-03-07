@@ -124,6 +124,13 @@ class _MotionTrackerState extends State<MotionTracker> {
               ],
             ),
           ),
+          Positioned(
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/imgs/inner-circle.png',              
+            ),
+          ),
           const Positioned(
             bottom: 0,
             left: 0,
