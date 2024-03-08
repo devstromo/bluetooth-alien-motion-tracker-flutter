@@ -13,10 +13,9 @@ class MotionTracker extends StatefulWidget {
 }
 
 class _MotionTrackerState extends State<MotionTracker> {
-  static const Duration _ignoreDuration = Duration(milliseconds: 20);
+  // static const Duration _ignoreDuration = Duration(milliseconds: 20);
   GyroscopeEvent? _gyroscopeEvent;
-  int? _gyroscopeLastInterval;
-  DateTime? _gyroscopeUpdateTime;
+  // DateTime? _gyroscopeUpdateTime;
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   Duration sensorInterval = SensorInterval.normalInterval;
   double _currentRotation = 0.0;
@@ -30,17 +29,17 @@ class _MotionTrackerState extends State<MotionTracker> {
     _streamSubscriptions.add(
       gyroscopeEventStream(samplingPeriod: sensorInterval).listen(
         (GyroscopeEvent event) {
-          final now = DateTime.now();
+          // final now = DateTime.now();
           setState(() {
             _gyroscopeEvent = event;
-            if (_gyroscopeUpdateTime != null) {
-              final interval = now.difference(_gyroscopeUpdateTime!);
-              if (interval > _ignoreDuration) {
-                _gyroscopeLastInterval = interval.inMilliseconds;
-              }
-            }
+            // if (_gyroscopeUpdateTime != null) {
+            //   final interval = now.difference(_gyroscopeUpdateTime!);
+            //   if (interval > _ignoreDuration) {
+            //     _gyroscopeLastInterval = interval.inMilliseconds;
+            //   }
+            // }
           });
-          _gyroscopeUpdateTime = now;
+          // _gyroscopeUpdateTime = now;
           _updateRotation(event);
         },
         onError: (e) {
