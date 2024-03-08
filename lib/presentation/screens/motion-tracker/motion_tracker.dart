@@ -25,7 +25,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   @override
   void initState() {
     super.initState();
-    _imageProvider = const AssetImage('assets/imgs/inner-circle-thin.png');
+    _imageProvider = const AssetImage('assets/imgs/motion-marker-circle.png');
 
     _streamSubscriptions.add(
       gyroscopeEventStream(samplingPeriod: sensorInterval).listen(
