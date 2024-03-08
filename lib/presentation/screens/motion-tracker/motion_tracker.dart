@@ -25,7 +25,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   @override
   void initState() {
     super.initState();
-    _imageProvider = const AssetImage('assets/imgs/inner-circle.png');
+    _imageProvider = const AssetImage('assets/imgs/inner-circle-thin.png');
 
     _streamSubscriptions.add(
       gyroscopeEventStream(samplingPeriod: sensorInterval).listen(
@@ -151,7 +151,8 @@ class _MotionTrackerState extends State<MotionTracker> {
             right: 0,
             child: Transform.rotate(
               angle: _currentRotation, // Use your current rotation here
-              child: Image(image: _imageProvider),
+              child: Image(image: _imageProvider,
+              ),
             ),
           ),
           const Positioned(
