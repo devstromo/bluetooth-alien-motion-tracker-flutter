@@ -51,6 +51,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       precacheImage(_imageProvider, context);
       await player.setSource(AssetSource('sounds/motion-tracker-beep.wav'));
       await player.resume();
+      await player.setReleaseMode(ReleaseMode.loop);
     });
   }
 
