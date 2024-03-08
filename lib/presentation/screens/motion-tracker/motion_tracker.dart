@@ -52,9 +52,10 @@ class _MotionTrackerState extends State<MotionTracker> {
       precacheImage(_imageProvider, context);
       await player.setSource(
         AssetSource(
-          kBeepSound,
+          kBlipSound,
         ),
       );
+      await player.setVolume(1);
       await player.resume();
       await player.setReleaseMode(ReleaseMode.loop);
     });
