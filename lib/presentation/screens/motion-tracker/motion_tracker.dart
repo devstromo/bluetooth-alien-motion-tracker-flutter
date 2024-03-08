@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:bluetooth_alien_motion_tracker/data/data.dart';
 import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -49,7 +50,11 @@ class _MotionTrackerState extends State<MotionTracker> {
     );
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       precacheImage(_imageProvider, context);
-      await player.setSource(AssetSource('sounds/motion-tracker-beep.wav'));
+      await player.setSource(
+        AssetSource(
+          kBeepSound,
+        ),
+      );
       await player.resume();
       await player.setReleaseMode(ReleaseMode.loop);
     });
