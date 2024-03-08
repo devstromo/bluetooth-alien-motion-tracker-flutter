@@ -56,10 +56,13 @@ class _MotionTrackerState extends State<MotionTracker> {
 
   @override
   void dispose() {
-    super.dispose();
     for (final subscription in _streamSubscriptions) {
       subscription.cancel();
     }
+    Future.delayed(Duration.zero, () async {
+      await player.dispose();
+    });
+    super.dispose();
   }
 
   // Add this to your existing Gyroscope event listener
