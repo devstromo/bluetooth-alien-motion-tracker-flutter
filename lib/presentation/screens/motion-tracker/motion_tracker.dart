@@ -100,17 +100,6 @@ class _MotionTrackerState extends State<MotionTracker> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    'Gyroscope',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
                 Text(
                   'x: ${_gyroscopeEvent?.x.toStringAsFixed(6) ?? '?'}',
                   style: const TextStyle(
@@ -129,14 +118,6 @@ class _MotionTrackerState extends State<MotionTracker> {
                 ),
                 Text(
                   'z: ${_gyroscopeEvent?.z.toStringAsFixed(1) ?? '?'}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${_gyroscopeLastInterval?.toString() ?? '?'} ms',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
