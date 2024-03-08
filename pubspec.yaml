@@ -10,6 +10,7 @@ dependencies:
   audioplayers: ^5.2.1
   flutter:
     sdk: flutter
+  flutter_blue_plus: ^1.31.16
   sensors_plus: ^4.0.2
 
 dev_dependencies:
