@@ -1,5 +1,4 @@
 import 'package:bluetooth_alien_motion_tracker/config/config.dart';
-import 'package:bluetooth_alien_motion_tracker/presentation/widgets/distance_numbers.dart';
 import 'package:flutter/material.dart';
 
 class DistanceDataContainer extends StatelessWidget {
@@ -12,7 +11,6 @@ class DistanceDataContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Container(
       height: kToolbarHeight,
       color: kDistanceContainerColor,
