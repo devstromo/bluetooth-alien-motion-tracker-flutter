@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:bluetooth_alien_motion_tracker/data/data.dart';
 import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class MotionTracker extends StatefulWidget {
@@ -20,6 +21,10 @@ class _MotionTrackerState extends State<MotionTracker> {
   double _currentRotation = 0.0;
   late final ImageProvider _imageProvider;
   final player = AudioPlayer();
+  BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
+  bool _isScanning = false;
+  late StreamSubscription<BluetoothAdapterState> _adapterStateStateSubscription;
+  late StreamSubscription<bool> _isScanningSubscription;
 
   @override
   void initState() {
@@ -48,6 +53,19 @@ class _MotionTrackerState extends State<MotionTracker> {
         cancelOnError: true,
       ),
     );
+    _adapterStateStateSubscription =
+        FlutterBluePlus.adapterState.listen((state) {
+      _adapterState = state;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    _isScanningSubscription = FlutterBluePlus.isScanning.listen((state) {
+      _isScanning = state;
+      if (mounted) {
+        setState(() {});
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       precacheImage(_imageProvider, context);
       await player.setSource(
@@ -69,6 +87,7 @@ class _MotionTrackerState extends State<MotionTracker> {
     Future.delayed(Duration.zero, () async {
       await player.dispose();
     });
+    _adapterStateStateSubscription.cancel();
     super.dispose();
   }
 
