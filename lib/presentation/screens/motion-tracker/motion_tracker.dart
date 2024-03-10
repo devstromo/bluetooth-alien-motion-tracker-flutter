@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:bluetooth_alien_motion_tracker/data/data.dart';
@@ -24,7 +25,11 @@ class _MotionTrackerState extends State<MotionTracker> {
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
   bool _isScanning = false;
   late StreamSubscription<BluetoothAdapterState> _adapterStateStateSubscription;
+  late StreamSubscription<List<ScanResult>> _scanResultsSubscription;
   late StreamSubscription<bool> _isScanningSubscription;
+
+  List<BluetoothDevice> _systemDevices = [];
+  List<ScanResult> _scanResults = [];
 
   @override
   void initState() {
@@ -60,6 +65,16 @@ class _MotionTrackerState extends State<MotionTracker> {
         setState(() {});
       }
     });
+
+    _scanResultsSubscription = FlutterBluePlus.scanResults.listen((results) {
+      _scanResults = results;
+      if (mounted) {
+        setState(() {});
+      }
+      log(_scanResults.toString());
+    }, onError: (e) {
+      // Snackbar.show(ABC.b, prettyException("Scan Error:", e), success: false);
+    });
     _isScanningSubscription = FlutterBluePlus.isScanning.listen((state) {
       _isScanning = state;
       if (mounted) {
@@ -88,6 +103,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       await player.dispose();
     });
     _adapterStateStateSubscription.cancel();
+    _isScanningSubscription.cancel();
     super.dispose();
   }
 
@@ -102,6 +118,36 @@ class _MotionTrackerState extends State<MotionTracker> {
             .x; // This is a simple example, you'll likely want to scale and/or limit this value
       });
     }
+  }
+
+  Future onScanPressed() async {
+    try {
+      _systemDevices = await FlutterBluePlus.systemDevices;
+    } catch (e) {
+      log(
+        "System Devices Error: $e",
+      );
+    }
+    try {
+      await FlutterBluePlus.startScan(timeout: const Duration(seconds: 15));
+    } catch (e) {
+      log(
+        "Start Scan Error: $e",
+      );
+    }
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  Future onRefresh() {
+    if (_isScanning == false) {
+      FlutterBluePlus.startScan(timeout: const Duration(seconds: 15));
+    }
+    if (mounted) {
+      setState(() {});
+    }
+    return Future.delayed(Duration(milliseconds: 500));
   }
 
   @override
