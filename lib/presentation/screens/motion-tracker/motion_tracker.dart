@@ -74,6 +74,17 @@ class _MotionTrackerState extends State<MotionTracker> {
       }
       log("Results");
       log(_scanResults.toString());
+      final filterPoints = _scanResults
+          .map(
+            (result) => Point(
+              x: 0.0,
+              y: 0.0,
+              rssi: result.rssi,
+            ),
+          )
+          .toList();
+      _points.clear();
+      _points.addAll(filterPoints);
     }, onError: (e) {
       // Snackbar.show(ABC.b, prettyException("Scan Error:", e), success: false);
     });
@@ -245,6 +256,14 @@ class _MotionTrackerState extends State<MotionTracker> {
                 ),
                 Text(
                   'z: ${_gyroscopeEvent?.z.toStringAsFixed(1) ?? '?'}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Points: ${_points.length}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
