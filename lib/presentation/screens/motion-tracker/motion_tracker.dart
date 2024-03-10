@@ -75,6 +75,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       log("Results");
       log(_scanResults.toString());
       final filterPoints = _scanResults
+          .where((element) => element.rssi > -75)
           .map(
             (result) => Point(
               x: 0.0,
