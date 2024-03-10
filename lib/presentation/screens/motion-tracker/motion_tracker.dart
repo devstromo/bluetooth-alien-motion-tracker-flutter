@@ -71,24 +71,25 @@ class _MotionTrackerState extends State<MotionTracker> {
     _scanResultsSubscription = FlutterBluePlus.scanResults.listen((results) {
       _scanResults = results;
       if (mounted) {
-        setState(() {});
+        setState(() {
+          log("Results");
+          log(_scanResults.toString());
+          final filterPoints = _scanResults
+              .where((element) => element.rssi > -75)
+              .map(
+                (result) => Point(
+                  x: 0.0,
+                  y: 0.0,
+                  rssi: result.rssi,
+                ),
+              )
+              .toList();
+          _points.clear();
+          _points.addAll(filterPoints);
+          log(_points.toString());
+          _updateBeep(_points);
+        });
       }
-      log("Results");
-      log(_scanResults.toString());
-      final filterPoints = _scanResults
-          .where((element) => element.rssi > -75)
-          .map(
-            (result) => Point(
-              x: 0.0,
-              y: 0.0,
-              rssi: result.rssi,
-            ),
-          )
-          .toList();
-      _points.clear();
-      _points.addAll(filterPoints);
-      log(_points.toString());
-      // _updateBeep(_points);
     }, onError: (e) {
       log('Scan Error: $e');
     });
@@ -107,7 +108,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       );
       await beep.setSource(
         AssetSource(
-          kBlipSound,
+          kBeepSound,
         ),
       );
       await player.setVolume(1);
