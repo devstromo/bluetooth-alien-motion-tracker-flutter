@@ -159,7 +159,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   static TextStyle _computeTextStyle(int rssi) {
     if (rssi >= -35) {
       return TextStyle(color: Colors.greenAccent[700]);
-    } else if (rssi >= -45)
+    } else if (rssi >= -45) {
       return TextStyle(
         color: Color.lerp(
           Colors.greenAccent[700],
@@ -167,7 +167,7 @@ class _MotionTrackerState extends State<MotionTracker> {
           -(rssi + 35) / 10,
         ),
       );
-    else if (rssi >= -55) {
+    } else if (rssi >= -55) {
       return TextStyle(
         color: Color.lerp(
           Colors.lightGreen,
@@ -201,7 +201,9 @@ class _MotionTrackerState extends State<MotionTracker> {
       );
     } else {
       /*code symmetry*/
-      return const TextStyle(color: Colors.redAccent);
+      return const TextStyle(
+        color: Colors.redAccent,
+      );
     }
   }
 
