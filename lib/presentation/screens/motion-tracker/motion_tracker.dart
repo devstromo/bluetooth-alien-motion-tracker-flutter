@@ -85,6 +85,7 @@ class _MotionTrackerState extends State<MotionTracker> {
           .toList();
       _points.clear();
       _points.addAll(filterPoints);
+      log(_points.toString());
     }, onError: (e) {
       log('Scan Error: $e');
     });

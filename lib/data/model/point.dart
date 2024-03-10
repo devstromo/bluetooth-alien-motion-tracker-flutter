@@ -8,4 +8,10 @@ class Point {
   double x;
   double y;
   int? rssi;
+
+  @override
+  String toString() {
+    
+    return 'Point [rssi: $rssi]';
+  }
 }
