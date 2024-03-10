@@ -71,6 +71,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       if (mounted) {
         setState(() {});
       }
+      log("Results");
       log(_scanResults.toString());
     }, onError: (e) {
       // Snackbar.show(ABC.b, prettyException("Scan Error:", e), success: false);
@@ -91,6 +92,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       await player.setVolume(1);
       await player.resume();
       await player.setReleaseMode(ReleaseMode.loop);
+      onScanPressed();
     });
   }
 
