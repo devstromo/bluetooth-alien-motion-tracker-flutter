@@ -30,6 +30,7 @@ class _MotionTrackerState extends State<MotionTracker> {
 
   List<BluetoothDevice> _systemDevices = [];
   List<ScanResult> _scanResults = [];
+  List<Point> _points = [];
 
   @override
   void initState() {
@@ -158,7 +159,9 @@ class _MotionTrackerState extends State<MotionTracker> {
 
   static TextStyle _computeTextStyle(int rssi) {
     if (rssi >= -35) {
-      return TextStyle(color: Colors.greenAccent[700]);
+      return TextStyle(
+        color: Colors.greenAccent[700],
+      );
     } else if (rssi >= -45) {
       return TextStyle(
         color: Color.lerp(
