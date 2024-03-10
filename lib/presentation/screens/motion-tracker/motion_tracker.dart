@@ -86,7 +86,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       _points.clear();
       _points.addAll(filterPoints);
     }, onError: (e) {
-      // Snackbar.show(ABC.b, prettyException("Scan Error:", e), success: false);
+      log('Scan Error: $e');
     });
     _isScanningSubscription = FlutterBluePlus.isScanning.listen((state) {
       _isScanning = state;
