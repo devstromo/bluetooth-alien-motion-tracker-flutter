@@ -22,6 +22,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   double _currentRotation = 0.0;
   late final ImageProvider _imageProvider;
   final player = AudioPlayer();
+  final beep = AudioPlayer();
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
   bool _isScanning = false;
   late StreamSubscription<BluetoothAdapterState> _adapterStateStateSubscription;
@@ -87,6 +88,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       _points.clear();
       _points.addAll(filterPoints);
       log(_points.toString());
+      // _updateBeep(_points);
     }, onError: (e) {
       log('Scan Error: $e');
     });
@@ -103,9 +105,17 @@ class _MotionTrackerState extends State<MotionTracker> {
           kBlipSound,
         ),
       );
+      await beep.setSource(
+        AssetSource(
+          kBlipSound,
+        ),
+      );
       await player.setVolume(1);
       await player.resume();
       await player.setReleaseMode(ReleaseMode.loop);
+
+      await beep.setVolume(1);
+      await beep.setReleaseMode(ReleaseMode.loop);
       onScanPressed();
     });
   }
@@ -137,6 +147,11 @@ class _MotionTrackerState extends State<MotionTracker> {
   }
 
   Future onScanPressed() async {
+    Future.delayed(
+      Duration(
+        seconds: 5,
+      ),
+    );
     try {
       _systemDevices = await FlutterBluePlus.systemDevices;
     } catch (e) {
@@ -168,6 +183,16 @@ class _MotionTrackerState extends State<MotionTracker> {
       setState(() {});
     }
     return Future.delayed(const Duration(milliseconds: 500));
+  }
+
+  void _updateBeep(List<Point> points) async {
+    if (points.isNotEmpty) {
+      await player.stop();
+      await beep.resume();
+    } else {
+      await player.resume();
+      await beep.stop();
+    }
   }
 
   static TextStyle _computeTextStyle(int rssi) {
