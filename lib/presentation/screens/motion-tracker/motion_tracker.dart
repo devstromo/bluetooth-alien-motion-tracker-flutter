@@ -131,7 +131,11 @@ class _MotionTrackerState extends State<MotionTracker> {
       );
     }
     try {
-      await FlutterBluePlus.startScan(timeout: const Duration(seconds: 15));
+      await FlutterBluePlus.startScan(
+        // timeout: const Duration(seconds: 15),
+        continuousUpdates: true,
+        androidUsesFineLocation: true,
+      );
     } catch (e) {
       log(
         "Start Scan Error: $e",
