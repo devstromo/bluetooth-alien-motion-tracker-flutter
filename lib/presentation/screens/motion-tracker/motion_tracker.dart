@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:bluetooth_alien_motion_tracker/data/data.dart';
-import 'package:bluetooth_alien_motion_tracker/presentation/widgets/point_marker.dart';
 import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
