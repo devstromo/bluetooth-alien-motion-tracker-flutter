@@ -80,7 +80,7 @@ class _MotionTrackerState extends State<MotionTracker> {
               .map(
                 (result) => Point(
                   x: 0.0,
-                  y: 0.0,
+                  y: mapRssiToScreenY(result.rssi, context),
                   rssi: result.rssi,
                 ),
               )
@@ -248,6 +248,23 @@ class _MotionTrackerState extends State<MotionTracker> {
         color: Colors.redAccent,
       );
     }
+  }
+
+  double mapRssiToScreenY(int rssi, BuildContext context) {
+    // Assuming RSSI ranges from 0 to -75
+    const double minRssi = -75;
+    const double maxRssi = 0;
+
+    // Screen height calculation
+    double screenHeight =
+        MediaQuery.of(context).size.width; // Use width due to landscape mode
+    double offset = 50; // Adjust based on your UI needs
+
+    // Map RSSI to screen height
+    double y =
+        ((rssi - minRssi) / (maxRssi - minRssi)) * (screenHeight - offset);
+
+    return y;
   }
 
   @override
