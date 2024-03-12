@@ -12,6 +12,19 @@ class PointMarker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Positioned(
+      bottom: y,
+      left: x,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            50,
+          ),
+        ),
+      ),
+    );
   }
 }
