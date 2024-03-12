@@ -80,7 +80,10 @@ class _MotionTrackerState extends State<MotionTracker> {
               .map(
                 (result) => Point(
                   x: 0.0,
-                  y: mapRssiToScreenY(result.rssi, context),
+                  y: mapRssiToScreenY(
+                    result.rssi,
+                    context,
+                  ),
                   rssi: result.rssi,
                 ),
               )
