@@ -31,7 +31,7 @@ class _MotionTrackerState extends State<MotionTracker> {
 
   List<BluetoothDevice> _systemDevices = [];
   List<ScanResult> _scanResults = [];
-  List<Point> _points = [];
+  final _points = <Point>[];
 
   @override
   void initState() {
@@ -61,15 +61,18 @@ class _MotionTrackerState extends State<MotionTracker> {
         cancelOnError: true,
       ),
     );
+
     _adapterStateStateSubscription =
         FlutterBluePlus.adapterState.listen((state) {
       if (mounted) {
         setState(() {
           _adapterState = state;
-            if (state == BluetoothAdapterState.on) {
-    // Bluetooth has been turned on, attempt to start scanning again
-    startBluetoothScanning();
-  }
+          if (state == BluetoothAdapterState.on) {
+            startBluetoothScanning();
+          } else if (state == BluetoothAdapterState.off ||
+              state == BluetoothAdapterState.turningOff) {
+            stopScan();
+          }
         });
       }
     });
@@ -102,12 +105,14 @@ class _MotionTrackerState extends State<MotionTracker> {
     }, onError: (e) {
       log('Scan Error: $e');
     });
+
     _isScanningSubscription = FlutterBluePlus.isScanning.listen((state) {
       _isScanning = state;
       if (mounted) {
         setState(() {});
       }
     });
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       precacheImage(_imageProvider, context);
       await player.setSource(
@@ -154,6 +159,12 @@ class _MotionTrackerState extends State<MotionTracker> {
             .x; // This is a simple example, you'll likely want to scale and/or limit this value
       });
     }
+  }
+
+  Future<void> stopScan() {
+    _points.clear();
+    _scanResults.clear();
+    return FlutterBluePlus.stopScan();
   }
 
   Future startBluetoothScanning() async {
