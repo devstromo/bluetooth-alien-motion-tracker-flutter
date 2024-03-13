@@ -63,9 +63,14 @@ class _MotionTrackerState extends State<MotionTracker> {
     );
     _adapterStateStateSubscription =
         FlutterBluePlus.adapterState.listen((state) {
-      _adapterState = state;
       if (mounted) {
-        setState(() {});
+        setState(() {
+          _adapterState = state;
+            if (state == BluetoothAdapterState.on) {
+    // Bluetooth has been turned on, attempt to start scanning again
+    startBluetoothScanning();
+  }
+        });
       }
     });
 
@@ -121,7 +126,7 @@ class _MotionTrackerState extends State<MotionTracker> {
 
       await beep.setVolume(1);
       await beep.setReleaseMode(ReleaseMode.loop);
-      onScanPressed();
+      startBluetoothScanning();
     });
   }
 
@@ -151,7 +156,7 @@ class _MotionTrackerState extends State<MotionTracker> {
     }
   }
 
-  Future onScanPressed() async {
+  Future startBluetoothScanning() async {
     Future.delayed(
       const Duration(
         seconds: 5,
@@ -178,16 +183,6 @@ class _MotionTrackerState extends State<MotionTracker> {
     if (mounted) {
       setState(() {});
     }
-  }
-
-  Future onRefresh() {
-    if (_isScanning == false) {
-      FlutterBluePlus.startScan(timeout: const Duration(seconds: 15));
-    }
-    if (mounted) {
-      setState(() {});
-    }
-    return Future.delayed(const Duration(milliseconds: 500));
   }
 
   void _updateBeep(List<Point> points) async {
