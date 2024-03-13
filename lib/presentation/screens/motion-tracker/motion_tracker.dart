@@ -164,6 +164,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   Future<void> stopScan() {
     _points.clear();
     _scanResults.clear();
+    _updateBeep(_points);
     return FlutterBluePlus.stopScan();
   }
 
@@ -201,8 +202,8 @@ class _MotionTrackerState extends State<MotionTracker> {
       await player.stop();
       await beep.resume();
     } else {
-      await player.resume();
       await beep.stop();
+      await player.resume();
     }
   }
 
