@@ -1,6 +1,5 @@
+import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-
-import 'blurred_circle.dart';
 
 class PointMarker extends StatelessWidget {
   const PointMarker({
@@ -17,7 +16,7 @@ class PointMarker extends StatelessWidget {
     return Positioned(
       bottom: y,
       left: x,
-      child: BlurredCircle(),
+      child: const BlinkingMarker(),
     );
   }
 }
