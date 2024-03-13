@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:bluetooth_alien_motion_tracker/data/data.dart';
@@ -81,13 +82,18 @@ class _MotionTrackerState extends State<MotionTracker> {
       _scanResults = results;
       if (mounted) {
         setState(() {
+          final screenWidth = MediaQuery.of(context).size.width;
+          final rangeStart = screenWidth * 0.15; // Start 15% from the left
+          final rangeEnd = screenWidth * 0.85;
+          // End 85% from the left, which is 70% of width
           log("Results");
           log(_scanResults.toString());
           final filterPoints = _scanResults
               .where((element) => element.rssi > -75)
               .map(
                 (result) => Point(
-                  x: 0.0,
+                  x: math.Random().nextDouble() * (rangeEnd - rangeStart) +
+                      rangeStart,
                   y: mapRssiToScreenY(
                     result.rssi,
                     context,
