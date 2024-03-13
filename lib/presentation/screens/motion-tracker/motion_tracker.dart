@@ -115,22 +115,7 @@ class _MotionTrackerState extends State<MotionTracker> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       precacheImage(_imageProvider, context);
-      await player.setSource(
-        AssetSource(
-          kBlipSound,
-        ),
-      );
-      await beep.setSource(
-        AssetSource(
-          kBeepSound,
-        ),
-      );
-      await player.setVolume(1);
-      await player.resume();
-      await player.setReleaseMode(ReleaseMode.loop);
-
-      await beep.setVolume(1);
-      await beep.setReleaseMode(ReleaseMode.loop);
+      _setUpSounds();
       startBluetoothScanning();
     });
   }
@@ -146,6 +131,25 @@ class _MotionTrackerState extends State<MotionTracker> {
     _adapterStateStateSubscription.cancel();
     _isScanningSubscription.cancel();
     super.dispose();
+  }
+
+  _setUpSounds() async {
+    await player.setSource(
+      AssetSource(
+        kBlipSound,
+      ),
+    );
+    await beep.setSource(
+      AssetSource(
+        kBeepSound,
+      ),
+    );
+    await player.setVolume(1);
+    await player.resume();
+    await player.setReleaseMode(ReleaseMode.loop);
+
+    await beep.setVolume(1);
+    await beep.setReleaseMode(ReleaseMode.loop);
   }
 
   // Add this to your existing Gyroscope event listener
