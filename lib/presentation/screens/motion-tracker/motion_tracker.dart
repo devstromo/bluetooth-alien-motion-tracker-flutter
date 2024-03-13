@@ -322,10 +322,11 @@ class _MotionTrackerState extends State<MotionTracker> {
               ],
             ),
           ),
-          const PointMarker(
-            x: 50,
-            y: 50,
-          ),
+          if (_points.isNotEmpty)
+            const PointMarker(
+              x: 50,
+              y: 50,
+            ),
           Positioned(
             left: 0,
             right: 0,
