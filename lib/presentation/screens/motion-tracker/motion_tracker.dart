@@ -236,80 +236,85 @@ class _MotionTrackerState extends State<MotionTracker> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> stackChildren = [
+      Center(
+        child: Column(
+          children: [
+            const Text(
+              'Motion Tracker',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'x: ${_gyroscopeEvent?.x.toStringAsFixed(6) ?? '?'}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'y: ${_gyroscopeEvent?.y.toStringAsFixed(1) ?? '?'}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'z: ${_gyroscopeEvent?.z.toStringAsFixed(1) ?? '?'}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'Points: ${_points.length}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+      Positioned(
+        left: 0,
+        right: 0,
+        child: Transform.rotate(
+          angle: _currentRotation, // Use your current rotation here
+          child: Image(
+            image: _imageProvider,
+          ),
+        ),
+      ),
+      const Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: DistanceDataContainer(
+          numbers: DistanceNumbers(),
+        ),
+      ),
+    ];
+
+    // Add dynamic points to the stackChildren
+    stackChildren.addAll(_points.map((point) {
+      return PointMarker(
+        x: point.x,
+        y: point.y,
+      );
+    }).toList());
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
-        children: [
-          Center(
-            child: Column(
-              children: [
-                const Text(
-                  'Motion Tracker',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'x: ${_gyroscopeEvent?.x.toStringAsFixed(6) ?? '?'}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'y: ${_gyroscopeEvent?.y.toStringAsFixed(1) ?? '?'}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'z: ${_gyroscopeEvent?.z.toStringAsFixed(1) ?? '?'}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'Points: ${_points.length}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (_points.isNotEmpty)
-            const PointMarker(
-              x: 50,
-              y: 50,
-            ),
-          Positioned(
-            left: 0,
-            right: 0,
-            child: Transform.rotate(
-              angle: _currentRotation, // Use your current rotation here
-              child: Image(
-                image: _imageProvider,
-              ),
-            ),
-          ),
-          const Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: DistanceDataContainer(
-              numbers: DistanceNumbers(),
-            ),
-          )
-        ],
+        children: stackChildren,
       ),
     );
   }
