@@ -33,6 +33,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   List<BluetoothDevice> _systemDevices = [];
   List<ScanResult> _scanResults = [];
   final _points = <Point>[];
+  Map<String, Point> resultMap = <String, Point>{};
 
   @override
   void initState() {
@@ -89,10 +90,12 @@ class _MotionTrackerState extends State<MotionTracker> {
           log("Results");
           log(_scanResults.toString());
           // Create a map of new scan results for easy lookup
-          final newResultsMap = Map.fromIterable(
-              _scanResults.where((element) => element.rssi > -75),
-              key: (item) => item.device.remoteId.str,
-              value: (item) => item);
+          final newResultsMap = {
+            for (var item
+                in _scanResults.where((element) => element.rssi > -75))
+              item.device.remoteId.str: item
+          };
+          // final   filterResult =
 
           // Identify and remove points that are not in the new scan results
           _points.removeWhere(
@@ -103,11 +106,9 @@ class _MotionTrackerState extends State<MotionTracker> {
             final existingPointIndex =
                 _points.indexWhere((point) => point.remoteId == id);
             if (existingPointIndex != -1) {
-              // Update existing point properties as needed
               _points[existingPointIndex] = Point(
                 remoteId: id,
-                x: math.Random().nextDouble() * (rangeEnd - rangeStart) +
-                    rangeStart,
+                x: _points[existingPointIndex].x,
                 y: mapRssiToScreenY(result.rssi, context),
                 rssi: result.rssi,
               );
@@ -127,6 +128,7 @@ class _MotionTrackerState extends State<MotionTracker> {
             // Clear points if no results
             _points.clear();
           }
+          log("Points");
           log(_points.toString());
           _updateBeep(_points);
         });
