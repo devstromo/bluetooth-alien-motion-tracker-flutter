@@ -88,22 +88,45 @@ class _MotionTrackerState extends State<MotionTracker> {
           // End 85% from the left, which is 70% of width
           log("Results");
           log(_scanResults.toString());
-          final filterPoints = _scanResults
-              .where((element) => element.rssi > -75)
-              .map(
-                (result) => Point(
-                  x: math.Random().nextDouble() * (rangeEnd - rangeStart) +
-                      rangeStart,
-                  y: mapRssiToScreenY(
-                    result.rssi,
-                    context,
-                  ),
-                  rssi: result.rssi,
-                ),
-              )
-              .toList();
-          _points.clear();
-          _points.addAll(filterPoints);
+          // Create a map of new scan results for easy lookup
+          final newResultsMap = Map.fromIterable(
+              _scanResults.where((element) => element.rssi > -75),
+              key: (item) => item.device.remoteId.str,
+              value: (item) => item);
+
+          // Identify and remove points that are not in the new scan results
+          _points.removeWhere(
+              (point) => !newResultsMap.containsKey(point.remoteId));
+
+          // Update existing points and add new points
+          newResultsMap.forEach((id, result) {
+            final existingPointIndex =
+                _points.indexWhere((point) => point.remoteId == id);
+            if (existingPointIndex != -1) {
+              // Update existing point properties as needed
+              _points[existingPointIndex] = Point(
+                remoteId: id,
+                x: math.Random().nextDouble() * (rangeEnd - rangeStart) +
+                    rangeStart,
+                y: mapRssiToScreenY(result.rssi, context),
+                rssi: result.rssi,
+              );
+            } else {
+              // Add new point
+              _points.add(Point(
+                remoteId: id,
+                x: math.Random().nextDouble() * (rangeEnd - rangeStart) +
+                    rangeStart,
+                y: mapRssiToScreenY(result.rssi, context),
+                rssi: result.rssi,
+              ));
+            }
+          });
+
+          if (_scanResults.isEmpty) {
+            // Clear points if no results
+            _points.clear();
+          }
           log(_points.toString());
           _updateBeep(_points);
         });
