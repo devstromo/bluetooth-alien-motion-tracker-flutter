@@ -274,30 +274,6 @@ class _MotionTrackerState extends State<MotionTracker> {
               ),
             ),
             Text(
-              'x: ${_gyroscopeEvent?.x.toStringAsFixed(6) ?? '?'}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'y: ${_gyroscopeEvent?.y.toStringAsFixed(1) ?? '?'}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'z: ${_gyroscopeEvent?.z.toStringAsFixed(1) ?? '?'}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
               'Points: ${_points.length}',
               style: const TextStyle(
                 color: Colors.white,
@@ -318,6 +294,17 @@ class _MotionTrackerState extends State<MotionTracker> {
           ),
         ),
       ),
+    ];
+    // Add dynamic points to the stackChildren
+    stackChildren.addAll(_points.map((point) {
+      return PointMarker(
+        x: point.x,
+        y: point.y,
+      );
+    }).toList());
+
+    stackChildren = [
+      ...stackChildren,
       const Positioned(
         bottom: 0,
         left: 0,
@@ -327,14 +314,6 @@ class _MotionTrackerState extends State<MotionTracker> {
         ),
       ),
     ];
-
-    // Add dynamic points to the stackChildren
-    stackChildren.addAll(_points.map((point) {
-      return PointMarker(
-        x: point.x,
-        y: point.y,
-      );
-    }).toList());
 
     return Scaffold(
       backgroundColor: Colors.black,
