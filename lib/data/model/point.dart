@@ -13,7 +13,6 @@ class Point {
 
   @override
   String toString() {
-    
-    return 'Point [rssi: $rssi, x: $x, y: $y]';
+    return 'Point [remoteId: $remoteId,  rssi: $rssi, x: $x, y: $y]';
   }
 }
