@@ -30,7 +30,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   late StreamSubscription<List<ScanResult>> _scanResultsSubscription;
   late StreamSubscription<bool> _isScanningSubscription;
 
-  List<BluetoothDevice> _systemDevices = [];
+  
   List<ScanResult> _scanResults = [];
   final _points = <Point>[];
   Map<String, Point> resultMap = <String, Point>{};
@@ -208,14 +208,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       const Duration(
         seconds: 5,
       ),
-    );
-    try {
-      _systemDevices = await FlutterBluePlus.systemDevices;
-    } catch (e) {
-      log(
-        "System Devices Error: $e",
-      );
-    }
+    );  
     try {
       await FlutterBluePlus.startScan(
         // timeout: const Duration(seconds: 15),
