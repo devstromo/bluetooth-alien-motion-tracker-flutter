@@ -27,7 +27,7 @@ class _MotionTrackerState extends State<MotionTracker> {
 
   late StreamSubscription<bool> _isScanningSubscription;
 
-  List<ScanResult> _scanResults = [];
+  var _scanResults = <ScanResult>[];
   final _points = <Point>[];
   Map<String, Point> resultMap = <String, Point>{};
 
