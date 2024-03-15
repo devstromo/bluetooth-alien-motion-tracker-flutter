@@ -25,10 +25,9 @@ class _MotionTrackerState extends State<MotionTracker> {
   final player = AudioPlayer();
   final beep = AudioPlayer();
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
-  late StreamSubscription<BluetoothAdapterState> _adapterStateStateSubscription;
+
   late StreamSubscription<bool> _isScanningSubscription;
 
-  
   List<ScanResult> _scanResults = [];
   final _points = <Point>[];
   Map<String, Point> resultMap = <String, Point>{};
@@ -62,8 +61,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       ),
     );
 
-    _adapterStateStateSubscription =
-        FlutterBluePlus.adapterState.listen((state) {
+    FlutterBluePlus.adapterState.listen((state) {
       if (mounted) {
         setState(() {
           _adapterState = state;
@@ -135,7 +133,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       log('Scan Error: $e');
     });
 
-    _isScanningSubscription = FlutterBluePlus.isScanning.listen((state) {      
+    _isScanningSubscription = FlutterBluePlus.isScanning.listen((state) {
       if (mounted) {
         setState(() {});
       }
@@ -156,7 +154,6 @@ class _MotionTrackerState extends State<MotionTracker> {
     Future.delayed(Duration.zero, () async {
       await player.dispose();
     });
-    _adapterStateStateSubscription.cancel();
     _isScanningSubscription.cancel();
     super.dispose();
   }
@@ -205,7 +202,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       const Duration(
         seconds: 5,
       ),
-    );  
+    );
     try {
       await FlutterBluePlus.startScan(
         // timeout: const Duration(seconds: 15),
