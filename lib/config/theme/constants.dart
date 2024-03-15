@@ -1,0 +1,1 @@
+const kAssetMarkerCircleImage = 'assets/imgs/motion-marker-circle.png';

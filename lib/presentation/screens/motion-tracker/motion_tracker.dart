@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:bluetooth_alien_motion_tracker/config/config.dart';
 import 'package:bluetooth_alien_motion_tracker/data/data.dart';
 import 'package:bluetooth_alien_motion_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _MotionTrackerState extends State<MotionTracker> {
   @override
   void initState() {
     super.initState();
-    _imageProvider = const AssetImage('assets/imgs/motion-marker-circle.png');
+    _imageProvider = const AssetImage(kAssetMarkerCircleImage);
 
     _streamSubscriptions.add(
       gyroscopeEventStream(samplingPeriod: sensorInterval).listen(
