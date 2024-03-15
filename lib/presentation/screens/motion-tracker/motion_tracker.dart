@@ -17,7 +17,6 @@ class MotionTracker extends StatefulWidget {
 }
 
 class _MotionTrackerState extends State<MotionTracker> {
-  GyroscopeEvent? _gyroscopeEvent;
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   Duration sensorInterval = SensorInterval.normalInterval;
   double _currentRotation = 0.0;
@@ -40,9 +39,8 @@ class _MotionTrackerState extends State<MotionTracker> {
       gyroscopeEventStream(samplingPeriod: sensorInterval).listen(
         (GyroscopeEvent event) {
           setState(() {
-            _gyroscopeEvent = event;
+            _updateRotation(event);
           });
-          _updateRotation(event);
         },
         onError: (e) {
           showDialog(
@@ -62,7 +60,7 @@ class _MotionTrackerState extends State<MotionTracker> {
 
     FlutterBluePlus.adapterState.listen((state) {
       if (mounted) {
-        setState(() {         
+        setState(() {
           if (state == BluetoothAdapterState.on) {
             startBluetoothScanning();
           } else if (state == BluetoothAdapterState.off ||
