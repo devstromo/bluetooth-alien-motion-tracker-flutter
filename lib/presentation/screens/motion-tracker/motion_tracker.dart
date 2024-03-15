@@ -106,7 +106,6 @@ class _MotionTrackerState extends State<MotionTracker> {
                 rssi: result.rssi,
               );
             } else {
-              // Add new point
               _points.add(Point(
                 remoteId: id,
                 x: 50,
@@ -237,9 +236,7 @@ class _MotionTrackerState extends State<MotionTracker> {
     // Screen height calculation
     double screenHeight =
         MediaQuery.of(context).size.width; // Use width due to landscape mode
-    double offset = 100; // Adjust based on your UI needs
-
-    // Map RSSI to screen height
+    double offset = 100;
     double y =
         ((rssi - minRssi) / (maxRssi - minRssi)) * (screenHeight - offset);
 
@@ -275,14 +272,13 @@ class _MotionTrackerState extends State<MotionTracker> {
         left: 0,
         right: 0,
         child: Transform.rotate(
-          angle: _currentRotation, // Use your current rotation here
+          angle: _currentRotation,
           child: Image(
             image: _imageProvider,
           ),
         ),
       ),
     ];
-    // Add dynamic points to the stackChildren
     stackChildren.addAll(_points.map((point) {
       return PointMarker(
         x: point.x.toDouble(),
