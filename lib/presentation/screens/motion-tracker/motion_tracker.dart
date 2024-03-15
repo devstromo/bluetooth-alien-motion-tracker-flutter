@@ -24,7 +24,6 @@ class _MotionTrackerState extends State<MotionTracker> {
   late final ImageProvider _imageProvider;
   final player = AudioPlayer();
   final beep = AudioPlayer();
-  BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
 
   late StreamSubscription<bool> _isScanningSubscription;
 
@@ -63,8 +62,7 @@ class _MotionTrackerState extends State<MotionTracker> {
 
     FlutterBluePlus.adapterState.listen((state) {
       if (mounted) {
-        setState(() {
-          _adapterState = state;
+        setState(() {         
           if (state == BluetoothAdapterState.on) {
             startBluetoothScanning();
           } else if (state == BluetoothAdapterState.off ||
