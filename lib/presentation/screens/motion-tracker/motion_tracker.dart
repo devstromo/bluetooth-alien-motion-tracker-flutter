@@ -88,7 +88,6 @@ class _MotionTrackerState extends State<MotionTracker> {
                 in _scanResults.where((element) => element.rssi > -75))
               item.device.remoteId.str: item
           };
-          // final   filterResult =
 
           // Identify and remove points that are not in the new scan results
           _points.removeWhere(
@@ -202,9 +201,9 @@ class _MotionTrackerState extends State<MotionTracker> {
     );
     try {
       await FlutterBluePlus.startScan(
-        // timeout: const Duration(seconds: 15),
         continuousUpdates: true,
         androidUsesFineLocation: true,
+        removeIfGone: Durations.extralong4,
       );
     } catch (e) {
       log(
