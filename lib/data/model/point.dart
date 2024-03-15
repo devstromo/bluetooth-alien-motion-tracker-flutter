@@ -7,8 +7,8 @@ class Point {
   });
 
   String remoteId;
-  double x;
-  double y;
+  int x;
+  int y;
   int? rssi;
 
   @override

@@ -77,6 +77,7 @@ class _MotionTrackerState extends State<MotionTracker> {
       if (mounted) {
         setState(() {
           final screenWidth = MediaQuery.of(context).size.width;
+          final screenHeight = MediaQuery.of(context).size.height;
           final rangeStart = screenWidth * 0.15; // Start 15% from the left
           final rangeEnd = screenWidth * 0.85;
           // End 85% from the left, which is 70% of width
@@ -85,7 +86,7 @@ class _MotionTrackerState extends State<MotionTracker> {
           // Create a map of new scan results for easy lookup
           final newResultsMap = {
             for (var item
-                in _scanResults.where((element) => element.rssi > -75))
+                in _scanResults.where((element) => element.rssi > -55))
               item.device.remoteId.str: item
           };
 
@@ -108,8 +109,11 @@ class _MotionTrackerState extends State<MotionTracker> {
               // Add new point
               _points.add(Point(
                 remoteId: id,
-                x: math.Random().nextDouble() * (rangeEnd - rangeStart) +
-                    rangeStart,
+                x: 50,
+                
+                // (math.Random().nextInt(screenHeight.toInt()) * (rangeEnd - rangeStart) +
+                //         rangeStart)
+                //     .toInt(),
                 y: mapRssiToScreenY(result.rssi, context),
                 rssi: result.rssi,
               ));
@@ -225,7 +229,7 @@ class _MotionTrackerState extends State<MotionTracker> {
     }
   }
 
-  double mapRssiToScreenY(int rssi, BuildContext context) {
+  int mapRssiToScreenY(int rssi, BuildContext context) {
     // Assuming RSSI ranges from 0 to -75
     const double minRssi = -75;
     const double maxRssi = 0;
@@ -233,13 +237,13 @@ class _MotionTrackerState extends State<MotionTracker> {
     // Screen height calculation
     double screenHeight =
         MediaQuery.of(context).size.width; // Use width due to landscape mode
-    double offset = 50; // Adjust based on your UI needs
+    double offset = 100; // Adjust based on your UI needs
 
     // Map RSSI to screen height
     double y =
         ((rssi - minRssi) / (maxRssi - minRssi)) * (screenHeight - offset);
 
-    return y;
+    return y.toInt();
   }
 
   @override
@@ -281,8 +285,8 @@ class _MotionTrackerState extends State<MotionTracker> {
     // Add dynamic points to the stackChildren
     stackChildren.addAll(_points.map((point) {
       return PointMarker(
-        x: point.x,
-        y: point.y,
+        x: point.x.toDouble(),
+        y: point.y.toDouble(),
       );
     }).toList());
 
